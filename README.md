@@ -13,7 +13,7 @@ Clone the repository to your local development environment.
 git clone git@github.com:anniechen9025/Budget-Trackers.git
 ```
 
-Run `npm install` in your terminal to install all dependencies. To run the application locally, run `node server.js` in your CLI, and then open `http://localhost:3000` in your preferred browswer. The Workout-Tracker app is [live on Heroku](https://jouan-budget-trackers.herokuapp.com) for you to use as well.
+Run `npm install` in your terminal to install all dependencies. To run the application locally, run `node server.js` in your CLI, and then open `http://localhost:3000` in your preferred browser. The Workout-Tracker app is [live on Heroku](https://jouan-budget-trackers.herokuapp.com) for you to use as well.
 
 
 ## Deployed Link:
