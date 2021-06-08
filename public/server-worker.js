@@ -1,62 +1,52 @@
 const FILES_TO_CACHE = [
     '/',
-    '/index.html',
+    '/assets/js/db.js',
     '/assets/css/styles.css',
+    '/assets/js/index.js',
     '/dist/assets/icons/icon_192x192.png',
     '/dist/assets/icons/icon_512x512.png',
-    '/dist/manifest.json',
-    '/dist/index.bundle.js',
-    '/dist/db.bundle.js'
+    '/dist/manifest.json'
 ];
 
-const PRECACHE = 'precache-v1';
-const RUNTIME = 'runtime';
+const CACHE_NAME = 'my-site-cache-v1';
+const DATA_CACHE_NAME = 'data-cache-v1';
 
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches
-            .open(PRECACHE)
+            .open(CACHE_NAME)
             .then((cache) => cache.addAll(FILES_TO_CACHE))
-            .then(self.skipWaiting())
-    );
-});
-
-// The activate handler takes care of cleaning up old caches.
-self.addEventListener('activate', (event) => {
-    const currentCaches = [PRECACHE, RUNTIME];
-    event.waitUntil(
-        caches
-            .keys()
-            .then((cacheNames) => {
-                return cacheNames.filter((cacheName) => !currentCaches.includes(cacheName));
-            })
-            .then((cachesToDelete) => {
-                return Promise.all(
-                    cachesToDelete.map((cacheToDelete) => {
-                        return caches.delete(cacheToDelete);
-                    })
-                );
-            })
-            .then(() => self.clients.claim())
     );
 });
 
 self.addEventListener('fetch', (event) => {
-    if (event.request.url.startsWith(self.location.origin)) {
+    if (event.request.url.includes('/api/')) {
         event.respondWith(
-            caches.match(event.request).then((cachedResponse) => {
-                if (cachedResponse) {
-                    return cachedResponse;
-                }
-
-                return caches.open(RUNTIME).then((cache) => {
-                    return fetch(event.request).then((response) => {
-                        return cache.put(event.request, response.clone()).then(() => {
-                            return response;
-                        });
-                    });
-                });
+            caches.open(DATA_CACHE_NAME).then((cache) => {
+                return fetch(event.request)
+                .then((response) =>{
+                    if (response.status = 200){
+                        cache.put(event.request.url, response.clone())
+                    }
+                    return response;
+                }).catch((error) =>{
+                    return cache.match(event.request)
+                })
+            }).catch((error) =>{
+                return console.log(error);
             })
         );
+        return;
     }
+    event.respondWith(
+        fetch(event.request).catch(()=>{
+            return caches.match(event.request).then((response)=>{
+                if (response){
+                    return response;
+                }else if(event.request.headers.get('accept').includes('text/html')){
+                    return caches.match('/')
+                }
+            })
+        })
+    )
 });

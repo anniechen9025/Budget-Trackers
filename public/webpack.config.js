@@ -34,7 +34,6 @@ const config = {
             description:
                 "An application that able to track my withdrawals and deposits with or without a data/internet connection.",
             background_color: "#01579b",
-            //! two theme colors?
             theme_color: "#ffffff",
             "theme-color": "#ffffff",
             start_url: "/",
