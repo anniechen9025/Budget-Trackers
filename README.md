@@ -3,7 +3,7 @@
 # 18. PWA Homework: Online/Offline Budget Trackers
 
 ## Description
-We had been learning how to use compress and manifest our website to have better performance. I learn how to use webpack to manifest the js we have on our app, also cache the info we want it to be work while offline and save into indexed DB. It was challenge to get the right way of save data into cache with the correct syntax. Over all I enjoy the process of seeing posting the transaction while offline still saved after page refreshed. 
+We had been learning how to use compress and manifest our website to have better performance. I learn how to use webpack to manifest the js we have on our app, also cache the info we want it to be work while offline and save into indexed DB. It was challenge to get the right way of save data into cache with the correct syntax. Over all I enjoy the process of seeing posting the transaction while offline still saved after page refreshed.  
 
 ## Installation:
 
