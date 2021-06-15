@@ -1,8 +1,14 @@
 let db;
 let budgetVersion;
+const indexedDB =
+    window.indexedDB ||
+    window.mozIndexedDB ||
+    window.webkitIndexedDB ||
+    window.msIndexedDB ||
+    window.shimIndexedDB;
 
 // Create a new db request for a "budget" database.
-const request = indexedDB.open('budget', budgetVersion || 21);
+const request = indexedDB.open('budget', budgetVersion || 1);
 
 request.onupgradeneeded = function (e) {
     console.log('Upgrade needed in IndexDB');
